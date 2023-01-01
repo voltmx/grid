@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "django-fargate-starter"
+version = "0.1.0"
+description = "A starter project for a DRF project, deployable to AWS"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "django_fargate_starter"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.1.4"
+djangorestframework = "^3.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
