@@ -19,7 +19,13 @@ COPY poetry.lock .
 RUN poetry config virtualenvs.create false
 RUN poetry install
 
+# COPY ./entrypoint.sh .
+# RUN sed -i 's/\r$//g' /app/entrypoint.sh
+
 # Copy project
 COPY . .
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+RUN ["chmod", "+x", "/app/entrypoint.sh"]
+# run entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
