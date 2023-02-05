@@ -16,12 +16,21 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./:/app
-    ports:
-      - 8000:8000
+      - static_files:/app/staticfiles
     env_file:
       - ./.env.dev
     depends_on:
       - db
 
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    volumes:
+      - static_files:/app/staticfiles
+    depends_on:
+      - web
+
 volumes:
   postgres_data:
+  static_files:
