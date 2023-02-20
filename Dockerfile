@@ -23,13 +23,11 @@ COPY poetry.lock .
 RUN poetry config virtualenvs.create false
 RUN poetry install
 
-# COPY ./entrypoint.sh .
-# RUN sed -i 's/\r$//g' /app/entrypoint.sh
 
 # Copy project
 COPY . .
 
 
-RUN ["chmod", "+x", "/app/entrypoint.sh"]
-# run entrypoint.sh
-CMD ["/app/entrypoint.sh"]
+RUN ["chmod", "+x", "/app/launch.sh"]
+# run launch.sh
+CMD ["/app/launch.sh"]
