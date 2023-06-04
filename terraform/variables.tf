@@ -58,7 +58,10 @@ variable "amis" {
 
 variable "docker_image_url_django" {
   description = "Docker image to run in the ECS cluster"
-  default     = "731850255422.dkr.ecr.us-west-1.amazonaws.com/starter-django:latest"
+}
+
+variable "docker_image_url_nginx" {
+  description = "Docker image to run in the ECS cluster"
 }
 
 variable "app_count" {
@@ -80,4 +83,36 @@ variable "autoscale_max" {
 variable "autoscale_desired" {
   description = "Desired autoscale (number of EC2)"
   default     = "4"
+}
+
+# rds
+
+variable "rds_db_name" {
+  description = "RDS database name"
+  default     = "mydb"
+}
+variable "rds_username" {
+  description = "RDS database username"
+  default     = "foo"
+}
+variable "rds_password" {
+  description = "RDS database password"
+}
+variable "rds_instance_class" {
+  description = "RDS instance type"
+  default     = "db.t3.micro"
+}
+
+# domain
+
+variable "certificate_arn" {
+  description = "AWS Certificate Manager ARN for validated domain"
+}
+
+variable "django_allowed_hosts" {
+  description = "Space separated value for Django's ALLOWED_HOSTS"
+}
+
+variable "django_csrf_trusted_origins" {
+  description = "Space separated value for Django's CSRF_TRUSTED_ORIGINS"
 }
