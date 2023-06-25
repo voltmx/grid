@@ -13,7 +13,7 @@ services:
   web:
     container_name: web
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: tail -f /dev/null
     ports:
       - 8000:8000
     volumes:
@@ -22,6 +22,15 @@ services:
       - ./.env.dev
     depends_on:
       - db
+  nginx:	
+    build: ./nginx	
+    ports:	
+      - 80:80	
+    volumes:	
+      - static_files:/app/staticfiles	
+    depends_on:	
+      - web	
 
 volumes:
   postgres_data:
+  static_files:	
