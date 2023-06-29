@@ -10,6 +10,8 @@ services:
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=dbpassword
       - POSTGRES_DB=django_dev
+  sqs:
+    image: roribio16/alpine-sqs
   web:
     container_name: web
     build: .
@@ -21,6 +23,7 @@ services:
     env_file:
       - ./.env.dev
     depends_on:
+      - sqs
       - db
   nginx:	
     build: ./nginx	
@@ -30,6 +33,27 @@ services:
       - static_files:/app/staticfiles	
     depends_on:	
       - web	
+  celery:
+    build: .
+    command: celery -A starter worker -l info
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - sqs
+  beat:
+    build: .
+    command: celery -A starter beat -l info
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - sqs
+
 
 volumes:
   postgres_data:
