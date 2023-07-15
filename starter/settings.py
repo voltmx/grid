@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-CSRF_TRUSTED_ORIGINS=os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS").split(" ")
+CSRF_TRUSTED_ORIGINS = os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS").split(" ")
 
 # Application definition
 
@@ -128,6 +129,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Celery 
-CELERY_BROKER_TRANSPORT=os.environ.get("CELERY_BROKER_TRANSPORT")
-CELERY_BROKER_URL=os.environ.get("CELERY_BROKER_URL")
+# Celery
+CELERY_BROKER_TRANSPORT = os.environ.get("CELERY_BROKER_TRANSPORT")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+CELERY_BROKER_TRANSPORT_OPTIONS = {"region": os.environ.get("AWS_REGION")}
+

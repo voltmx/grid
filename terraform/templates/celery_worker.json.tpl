@@ -1,16 +1,10 @@
 [
   {
-    "name": "django-app",
+    "name": "celery-worker",
     "image": "${docker_image_url_django}",
-    "cpu": 156,
-    "memory": 384 ,
-    "portMappings": [
-      {
-        "name": "django-app-8000-tcp",
-        "containerPort": 8000,
-        "protocol": "tcp"
-      }
-    ],
+    "command": ["celery", "-A", "starter", "worker", "-l", "info"],
+    "cpu": 256,
+    "memory": 512,
     "essential": true,
     "environment": [
       {
@@ -68,36 +62,9 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/django-app",
+        "awslogs-group": "/ecs/celery-app",
         "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "django-app-log-stream"
-      }
-    }
-  },
-  {
-    "name": "nginx",
-    "image": "${docker_image_url_nginx}",
-    "essential": true,
-    "cpu": 100,
-    "memory": 128,
-    "portMappings": [
-      {
-        "containerPort": 80,
-        "protocol": "tcp"
-      }
-    ],
-    "mountPoints": [
-      {
-        "containerPath": "/app/staticfiles",
-        "sourceVolume": "static_volume"
-      }
-    ],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "/ecs/nginx",
-        "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "nginx-log-stream"
+        "awslogs-stream-prefix": "celery-app-log-stream"
       }
     }
   }
