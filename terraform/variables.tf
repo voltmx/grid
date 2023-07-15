@@ -105,6 +105,10 @@ variable "rds_instance_class" {
 
 # domain
 
+variable "domain" {
+  description = "Domain name to verify for AWS SES"
+}
+
 variable "certificate_arn" {
   description = "AWS Certificate Manager ARN for validated domain"
 }
@@ -115,4 +119,18 @@ variable "django_allowed_hosts" {
 
 variable "django_csrf_trusted_origins" {
   description = "Space separated value for Django's CSRF_TRUSTED_ORIGINS"
+}
+
+variable "ses_smtp_endpoint" {
+  description = "Amazon SES SMTP endpoint"
+  default     = "email-smtp.us-west-1.amazonaws.com"
+}
+
+variable "ses_smtp_port" {
+  description = "The SMTP port"
+  default = 587
+}
+
+variable "default_from_email" {
+  description = "Default email to send from"
 }

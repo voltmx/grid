@@ -17,6 +17,12 @@ resource "aws_ecs_task_definition" "app" {
     django_csrf_trusted_origins = var.django_csrf_trusted_origins
     sqs_access_key              = aws_iam_access_key.da_celery_sqs.id
     sqs_secret_key              = aws_iam_access_key.da_celery_sqs.secret
+    smtp_host                   = var.ses_smtp_endpoint
+    smtp_port                   = var.ses_smtp_port
+    smtp_user                   = aws_iam_access_key.smtp_user.id
+    smtp_password               = aws_iam_access_key.smtp_user.ses_smtp_password_v4
+    default_from_email          = var.default_from_email
+
   })
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -64,6 +70,12 @@ resource "aws_ecs_task_definition" "celery_worker" {
     django_csrf_trusted_origins = var.django_csrf_trusted_origins
     sqs_access_key              = aws_iam_access_key.da_celery_sqs.id
     sqs_secret_key              = aws_iam_access_key.da_celery_sqs.secret
+    smtp_host                   = var.ses_smtp_endpoint
+    smtp_port                   = var.ses_smtp_port
+    smtp_user                   = aws_iam_access_key.smtp_user.id
+    smtp_password               = aws_iam_access_key.smtp_user.ses_smtp_password_v4
+    default_from_email          = var.default_from_email
+
   })
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"

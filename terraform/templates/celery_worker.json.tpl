@@ -50,6 +50,30 @@
       {
         "name": "CELERY_BROKER_URL",
         "value": "sqs://${urlencode(sqs_access_key)}:${urlencode(sqs_secret_key)}@"
+      },
+      {
+        "name": "EMAIL_HOST",
+        "value": "${smtp_host}"
+      },
+      {
+        "name": "EMAIL_PORT",
+        "value": "${smtp_port}"
+      },
+      {
+        "name": "EMAIL_USE_TLS",
+        "value": "true"
+      },
+      {
+        "name": "EMAIL_HOST_USER",
+        "value": "${smtp_user}"
+      },
+      {
+        "name": "EMAIL_HOST_PASSWORD",
+        "value": "${smtp_password}"
+      },
+      {
+        "name": "DEFAULT_FROM_EMAIL",
+        "value": "${default_from_email}"
       }
     ],
     "mountPoints": [
