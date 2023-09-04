@@ -1,4 +1,4 @@
-# django-fargate-starter
+# Grid
 
 ## Manual steps
 - Point domain to ALB in your DNS settings

@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "django-fargate-starter"
+name = "grid"
 version = "0.1.0"
-description = "A starter project for a DRF project, deployable to AWS"
+description = "Grid tracker"
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 
