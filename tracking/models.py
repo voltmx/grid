@@ -32,15 +32,15 @@ class Habit(BaseModel):
 
 class HabitEntry(BaseModel):
     habit_id: models.UUIDField
-    date = models.DateTimeField()
+    date = models.DateField()
     habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="entries")
     description = models.TextField(
         blank=True,
     )
-    completed = models.BooleanField(blank=True)
+    completed = models.BooleanField(default=False)
     numerical = models.IntegerField(null=True, blank=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(TruncDate('date'), 'habit', name="habit_date_unique"),
+            models.UniqueConstraint('date', 'habit', name="habit_date_unique"),
         ]
