@@ -4,6 +4,7 @@ from tracking.models import Habit, HabitEntry
 
 
 class HabitEntryCreateSerializer(serializers.ModelSerializer):
+    habit_id = serializers.PrimaryKeyRelatedField(source="habit", queryset=Habit.objects.all())
     class Meta:
         model = HabitEntry
         fields = [
@@ -69,4 +70,5 @@ class HabitListRetrieveSerializer(serializers.ModelSerializer):
             "type",
             "user_id",
             "today_entries",
+            "numeric_goal",
         ]

@@ -26,7 +26,7 @@ class Habit(BaseModel):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="habits"
     )
     units = models.CharField(blank=True, max_length=255)
-    numeric_goal = models.IntegerField(null=True)
+    numeric_goal = models.IntegerField(null=True, blank=True)
     days_of_week = ArrayField(models.CharField(max_length=3), default=list, blank=True)
 
 

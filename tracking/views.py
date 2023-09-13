@@ -56,6 +56,11 @@ class HabitEntryListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return HabitEntry.objects.filter(habit__user_id=user_id)
+    
+    def perform_create(self, serializer):
+        print(repr(serializer))
+        print(serializer.validated_data)
+        return super().perform_create(serializer)
 
 
 class HabitEntryDetailView(generics.RetrieveUpdateDestroyAPIView):
