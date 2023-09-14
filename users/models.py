@@ -51,6 +51,8 @@ class User(AbstractBaseUser):
 
     is_active = models.BooleanField(default=True)
 
+    start_sunday = models.BooleanField(default=False)
+
     USERNAME_FIELD = "email"
 
     def has_perm(self, perm, obj=None):

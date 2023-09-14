@@ -8,6 +8,7 @@ class HabitEntryCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = HabitEntry
         fields = [
+            "id",
             "habit_id",
             "date",
             "description",
@@ -29,6 +30,12 @@ class HabitEntryListRetrieveSerializer(serializers.ModelSerializer):
             "completed",
             "numerical",
         ]
+        read_only_fields = [
+            "habit_id",
+            "created_at",
+            "edited_at",
+            "date"
+        ]
 
 
 class HabitCreateSerializer(serializers.ModelSerializer):
@@ -44,6 +51,7 @@ class HabitCreateSerializer(serializers.ModelSerializer):
             "user_id",
             "created_at",
             "edited_at",
+            "is_archived"
         ]
         read_only_fields = [
             "user_id",
@@ -56,7 +64,6 @@ class HabitListRetrieveSerializer(serializers.ModelSerializer):
     today_entries = HabitEntryListRetrieveSerializer(
         read_only=True, many=True, source="todays_entries"
     )
-
 
     class Meta:
         model = Habit
@@ -71,4 +78,5 @@ class HabitListRetrieveSerializer(serializers.ModelSerializer):
             "user_id",
             "today_entries",
             "numeric_goal",
+            "is_archived"
         ]

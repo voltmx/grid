@@ -28,6 +28,7 @@ class Habit(BaseModel):
     units = models.CharField(blank=True, max_length=255)
     numeric_goal = models.IntegerField(null=True, blank=True)
     days_of_week = ArrayField(models.CharField(max_length=3), default=list, blank=True)
+    is_archived = models.BooleanField(default=False)
 
 
 class HabitEntry(BaseModel):
@@ -38,7 +39,7 @@ class HabitEntry(BaseModel):
         blank=True,
     )
     completed = models.BooleanField(default=False)
-    numerical = models.IntegerField(null=True, blank=True)
+    numerical = models.FloatField(null=True, blank=True)
 
     class Meta:
         constraints = [

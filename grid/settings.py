@@ -152,7 +152,13 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 AUTH_USER_MODEL = "users.User"
 
-DJOSER = {"CREATE_SESSION_ON_LOGIN": True, "HIDE_USERS": True}
+DJOSER = {
+    "CREATE_SESSION_ON_LOGIN": True,
+    "HIDE_USERS": True,
+    "SERIALIZERS": {
+        "current_user": "users.serializers.UserSerializer",
+    },
+}
 
 
 # CORS_ALLOWED_ORIGINS = [

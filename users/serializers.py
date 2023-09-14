@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate, get_user_model
+
 User = get_user_model()
+
 
 class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(style={"input_type": "password"})
@@ -20,3 +22,9 @@ class LoginSerializer(serializers.Serializer):
             return attrs
         raise serializers.ValidationError("invalid_credentials")
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email", "start_sunday", "created_at", "edited_at"]
+        read_only_fields = ["id", "email"]
