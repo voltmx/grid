@@ -51,7 +51,8 @@ class HabitCreateSerializer(serializers.ModelSerializer):
             "user_id",
             "created_at",
             "edited_at",
-            "is_archived"
+            "is_archived",
+            "is_public"
         ]
         read_only_fields = [
             "user_id",
@@ -78,5 +79,6 @@ class HabitListRetrieveSerializer(serializers.ModelSerializer):
             "user_id",
             "today_entries",
             "numeric_goal",
-            "is_archived"
+            "is_archived",
+            "is_public"
         ]

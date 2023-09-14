@@ -29,10 +29,16 @@ class Habit(BaseModel):
     numeric_goal = models.IntegerField(null=True, blank=True)
     days_of_week = ArrayField(models.CharField(max_length=3), default=list, blank=True)
     is_archived = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=False)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["user_id", "is_public"], name="user_public_habit_idx"),
+        ]
 
 
 class HabitEntry(BaseModel):
-    habit_id: models.UUIDField
+    habit_id: models.UUIDField 
     date = models.DateField()
     habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name="entries")
     description = models.TextField(
@@ -43,5 +49,5 @@ class HabitEntry(BaseModel):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint('date', 'habit', name="habit_date_unique"),
+            models.UniqueConstraint('habit_id', 'date', name="habit_date_unique"),
         ]

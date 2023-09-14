@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from tracking.models import Habit, HabitEntry
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 
 from tracking.serializers import (
     HabitCreateSerializer,
@@ -24,7 +24,12 @@ class HabitListCreateView(generics.ListCreateAPIView):
         qp = self.request.query_params
         date = qp.get("entry_date")
         user_id = self.request.user.id
-        qs = Habit.objects.filter(user_id=user_id)
+        # User can only see their own habits, unless they are public
+        public_habit_q = Q(is_public=True)
+        user_habit_q = Q(user_id=user_id)
+
+        qs = Habit.objects.filter(public_habit_q | user_habit_q)
+
         if date:
             qs = qs.prefetch_related(
                 Prefetch(
@@ -44,7 +49,11 @@ class HabitDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
-        return Habit.objects.filter(user_id=user_id)
+        # User can only see their own habits, unless they are public
+        public_habit_q = Q(is_public=True)
+        user_habit_q = Q(user_id=user_id)
+        qs = Habit.objects.filter(public_habit_q | user_habit_q)
+        return qs
 
 
 class HabitEntryListCreateView(generics.ListCreateAPIView):
@@ -55,7 +64,11 @@ class HabitEntryListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
-        return HabitEntry.objects.filter(habit__user_id=user_id)
+        # User can only see their own habits, unless they are public
+        public_habit_q = Q(habit__is_public=True)
+        user_habit_q = Q(habit__user_id=user_id)
+        qs = HabitEntry.objects.filter(public_habit_q | user_habit_q)
+        return qs
     
     def perform_create(self, serializer):
         print(repr(serializer))
@@ -68,4 +81,8 @@ class HabitEntryDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         user_id = self.request.user.id
-        return HabitEntry.objects.filter(habit__user_id=user_id)
+        # User can only see their own habits, unless they are public
+        public_habit_q = Q(habit__is_public=True)
+        user_habit_q = Q(habit__user_id=user_id)
+        qs = HabitEntry.objects.filter(public_habit_q | user_habit_q)
+        return qs

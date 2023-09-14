@@ -134,6 +134,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+
 
 # Celery
 CELERY_BROKER_TRANSPORT = os.environ.get("CELERY_BROKER_TRANSPORT")
@@ -158,6 +168,7 @@ DJOSER = {
     "SERIALIZERS": {
         "current_user": "users.serializers.UserSerializer",
     },
+    "TOKEN_MODEL": None,
 }
 
 
